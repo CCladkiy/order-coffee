@@ -45,4 +45,32 @@ document.querySelector(".add-button").addEventListener("click", () => {
     fieldSets[fieldSets.length - 1].after(newFieldSet);
 });
 
+const modalOverlay = document.createElement('div');
 
+document.querySelector('.submit-button').addEventListener('click', (event) => {
+    event.preventDefault();
+    const modalContent = `<div class="modal-content">
+                            <p>Заказ принят!</p>
+                            <p>Вы заказали ${count} ${napitoktkatkov(count)}</p>
+                            <span class="close-button">X</span>
+                          </div>`;
+
+    modalOverlay.classList.add('modal-overlay');
+    modalOverlay.innerHTML = modalContent;
+    document.body.appendChild(modalOverlay);
+
+    const closeButton = modalOverlay.querySelector('.close-button');
+    closeButton.addEventListener('click', function() {
+        modalOverlay.remove();
+    });
+});
+
+function napitoktkatkov(n) {
+    if (n % 10 === 1 && n % 100 !== 11) {
+        return "напиток";
+    } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+        return "напитка";
+    } else {
+        return "напитков";
+    }
+}
