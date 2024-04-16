@@ -1,9 +1,10 @@
 let count = 1;
-const forms = document.querySelectorAll(".beverage");
-const form = forms[forms.length - 1].cloneNode(true);
+
 
 document.querySelector(".add-button").addEventListener("click", () => {
     count++;
+    let forms = document.querySelectorAll(".beverage");
+    let form = forms[forms.length - 1].cloneNode(true);
 
     form.querySelector('input[type="radio"][value="usual"]').name = `milk${count}`;
     form.querySelector("h4").innerHTML = `Напиток №${count}`;
@@ -17,14 +18,13 @@ document.querySelector(".add-button").addEventListener("click", () => {
     forms[forms.length - 1].after(form);
 });
 
-const submitButton = document.querySelector('.submit-button');
 const modalOverlay = document.createElement('div');
-
 
 document.querySelector('.submit-button').addEventListener('click', (event) => {
     event.preventDefault();
     const modalContent = `<div class="modal-content">
                             <p>Заказ принят!</p>
+                            <p>Вы заказали ${count} ${napitoktkatkov(count)}</p>
                             <span class="close-button">X</span>
                           </div>`;
 
@@ -37,3 +37,13 @@ document.querySelector('.submit-button').addEventListener('click', (event) => {
         modalOverlay.remove();
     });
 });
+
+function napitoktkatkov(n) {
+    if (n % 10 === 1 && n % 100 !== 11) {
+        return "напиток";
+    } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+        return "напитка";
+    } else {
+        return "напитков";
+    }
+}
